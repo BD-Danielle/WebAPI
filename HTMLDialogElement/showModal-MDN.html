@@ -38,6 +38,10 @@ dialog::backdrop{
       openCheck(dialog);
     });
 
+    dialog.addEventListener("click", () =>{
+      console.log('click');
+      dialog.close();
+    })
   })
   
 </script>

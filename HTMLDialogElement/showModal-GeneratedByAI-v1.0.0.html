@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Dialog Example</title>
+  <style id="dialogStyles">
+    /* 初始樣式 */
+  </style>
+</head>
+<body>
+  <!-- Example of dynamic content with data-dialog attribute -->
+  <div data-dialog>
+    <p>Check out our latest offers!</p>
+    <button id="closeButton">Close</button>
+  </div>
+
+  <script type="text/javascript">
+    class CustomDialog {
+      constructor(dialogContentSelector, options = {}) {
+        this.dialogContent = document.querySelector(dialogContentSelector);
+        if (!this.dialogContent) {
+          throw new Error('Dialog content not found');
+        }
+
+        this.dialog = document.createElement('dialog');
+        this.dialog.appendChild(this.dialogContent);
+        document.body.appendChild(this.dialog);
+
+        if (options.backdropStyle) {
+          this.setBackdropStyle(options.backdropStyle);
+        }
+
+        this.initializeEvents(options.closeButtonSelector);
+      }
+
+      setBackdropStyle(style) {
+        const styleTag = document.getElementById('dialogStyles');
+        styleTag.textContent = `dialog::backdrop { ${style} }`;
+      }
+
+      showDialog() {
+        this.dialog.showModal();
+      }
+
+      closeDialog() {
+        this.dialog.close();
+      }
+
+      initializeEvents(closeButtonSelector) {
+        if (closeButtonSelector) {
+          const closeButton = this.dialogContent.querySelector(closeButtonSelector);
+          if (closeButton) {
+            closeButton.addEventListener('click', () => this.closeDialog());
+          }
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const myDialog = new CustomDialog('[data-dialog]', {
+        backdropStyle: 'background-color: rgba(0.1, 0.1, 0.1, 0.5);',
+        closeButtonSelector: '#closeButton'
+      });
+
+      // Example of showing the dialog after 3 seconds
+      setTimeout(() => {
+        myDialog.showDialog();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
