@@ -9,6 +9,7 @@ class CustomDialog {
     this.dialog.appendChild(this.dialogContent);
     document.body.appendChild(this.dialog);
 
+    this.setDialogStyles();
     if (options.backdropStyle) {
       this.setBackdropStyle(options.backdropStyle);
     }
@@ -16,6 +17,17 @@ class CustomDialog {
     this.initializeEvents(options.closeButtonSelectors);
   }
 
+  setDialogStyles() {
+    Object.assign(this.dialog.style, {
+      all: 'unset',
+      width: '100%',
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    });
+  }
+  
   setBackdropStyle(style) {
     let styleTag = document.getElementById('dynamicDialogStyles');
     if (!styleTag) {
@@ -28,10 +40,12 @@ class CustomDialog {
 
   showDialog() {
     this.dialog.showModal();
+    this.dialogContent.style.display = 'block';
   }
 
   closeDialog() {
     this.dialog.close();
+    this.dialogContent.style.display = 'none';
   }
 
   initializeEvents(closeButtonSelectors) {

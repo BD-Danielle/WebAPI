@@ -6,12 +6,24 @@
   <script src="./js/es6.custom.dialog.js"></script>
   <title>Dynamic Dialog Example</title>
 </head>
+<style type="text/css">
+  .form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: white;
+  }
+</style>
 <body>
   <!-- Example of dynamic content with data-dialog attribute -->
-  <div data-dialog>
-    <p>Check out our latest offers!</p>
-    <button id="closeButton">Close</button>
-    <button id="closeButton2">Close2</button>
+  <button id="openDialog">open dialog</button>
+  <div data-dialog style="display: none;">
+    <div class="form">
+      <p>Check out our latest offers!</p>
+      <button id="closeButton">Close</button>
+      <button id="closeButton2">Close2</button>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -20,11 +32,10 @@
         backdropStyle: 'background-color: rgba(0.1, 0.1, 0.1, 0.5);',
         closeButtonSelectors: ['#closeButton', '#closeButton2']
       });
-
-      // Example of showing the dialog after 3 seconds
-      setTimeout(() => {
+      openDialog.addEventListener("click", function(){
         myDialog.showDialog();
-      }, 3000);
+      });
+      myDialog.showDialog();
     });
   </script>
 </body>
