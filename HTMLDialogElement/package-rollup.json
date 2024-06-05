@@ -1,0 +1,20 @@
+{
+  "name": "es6.custom.dialog",
+  "version": "1.0.0",
+  "description": "This file defines a class called CustomDialog, which is used to create and manage custom dialog boxes. With this class, you can easily convert HTML elements into dialog boxes and control the display and closing of the dialog box.",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "author": "CYL",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup": "^2.60.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0"
+  }
+}

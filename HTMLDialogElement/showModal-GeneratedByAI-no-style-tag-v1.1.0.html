@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./js/es6.custom.dialog.js"></script>
   <title>Dynamic Dialog Example</title>
 </head>
 <style type="text/css">
@@ -25,14 +24,14 @@
       <button id="closeButton2">Close2</button>
     </div>
   </div>
-
-  <script type="text/javascript">
+  <script type="module">
+    import './js/webpack/es6.custom.dialog.bundle1.0.0.js';
     document.addEventListener("DOMContentLoaded", function() {
-      const myDialog = new CustomDialog('[data-dialog]', {
+      const myDialog = new CustomDialog(document.body, '[data-dialog]', {
         backdropStyle: 'background-color: rgba(0.1, 0.1, 0.1, 0.5);',
         closeButtonSelectors: ['#closeButton', '#closeButton2']
       });
-      openDialog.addEventListener("click", function(){
+      document.getElementById('openDialog').addEventListener("click", function(){
         myDialog.showDialog();
       });
       myDialog.showDialog();
