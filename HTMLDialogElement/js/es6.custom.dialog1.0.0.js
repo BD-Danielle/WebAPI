@@ -39,23 +39,44 @@ class CustomDialog {
 
   setDialogStyle() {
     Object.assign(this.dialog.style, {
-      all: "unset",
-      width: "100%",
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)"
+      border: "unset",
+      overflow: 'unset',
+      padding: 0,
+      margin: "0 auto",
+      "background-color": "unset",
+      "max-width": "unset",
+      "max-height": "unset",
+      color: "unset",
+      position: "relative"
     })
   }
 
   showDialog() {
+    // 保存當前滾動位置
+    this.previousScrollY = window.scrollY;
+
+    // 固定背景並禁用滾動
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${this.previousScrollY}px`;
+    document.body.style.width = '100%';
+
+    // 顯示對話框
     this.dialog.showModal();
     this.dialogContent.style.display = 'block';
+    this.dialogContent.style.width = '100vw';
+    this.dialogContent.style.height = '100vh';
   }
 
   closeDialog() {
+    // 取消對話框顯示
     this.dialog.close();
     this.dialogContent.style.display = 'none';
+
+    // 恢復背景滾動
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, this.previousScrollY);
   }
 
   initializeEvents(closeButtonSelectors) {
@@ -68,7 +89,7 @@ class CustomDialog {
       buttons.forEach(button => {
         button.addEventListener('click', () => this.closeDialog());
       });
-    });
+    })
   }
 }
 
