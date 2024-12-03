@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSource (Server-Sent Events)</title>
+  <style>
+    .message {
+      padding: 10px;
+      margin: 5px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+    #messageContainer {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Server-Sent Events 示例</h1>
+  <div id="status">連接狀態：等待連接...</div>
+  <div id="messageContainer"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const statusDiv = document.getElementById('status');
+      const messageContainer = document.getElementById('messageContainer');
+
+      // 創建 EventSource 實例
+      const evtSource = new EventSource('/events');
+
+      // 連接成功時的處理
+      evtSource.onopen = () => {
+        statusDiv.textContent = '連接狀態：已連接';
+        statusDiv.style.color = 'green';
+      };
+
+      // 接收消息的處理
+      evtSource.onmessage = (event) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv.textContent = `收到新消息: ${event.data}`;
+        messageContainer.appendChild(messageDiv);
+        // 自動滾動到最新消息
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+      };
+
+      // 錯誤處理
+      evtSource.onerror = (err) => {
+        statusDiv.textContent = '連接狀態：連接錯誤';
+        statusDiv.style.color = 'red';
+        console.error('EventSource 失敗:', err);
+      };
+
+      // 自定義事件處理示例
+      evtSource.addEventListener('customEvent', (e) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv.style.backgroundColor = '#ffe6e6';
+        messageDiv.textContent = `收到自定義事件: ${e.data}`;
+        messageContainer.appendChild(messageDiv);
+      });
+    });
+  </script>
+</body>
+</html>
