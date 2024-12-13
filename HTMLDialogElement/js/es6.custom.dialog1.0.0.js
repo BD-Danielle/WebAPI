@@ -93,19 +93,16 @@ class CustomDialog {
   }
 }
 
-// 修改導出部分
-if (typeof module !== 'undefined' && module.exports) {
-  // CommonJS 導出
-  module.exports = CustomDialog;
-} else if (typeof define === 'function' && define.amd) {
-  // AMD 導出
-  define([], function() {
-    return CustomDialog;
-  });
-} else {
-  // 瀏覽器全局導出
+// 動態檢查環境並導出
+if (typeof window !== 'undefined') {
   window.CustomDialog = CustomDialog;
 }
 
-// ES6 默認導出
-export default CustomDialog;
+// 如果支援模組導出，則導出 CustomDialog
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { CustomDialog };
+} else if (typeof define === 'function' && define.amd) {
+  define([], function() {
+    return { CustomDialog };
+  });
+}
