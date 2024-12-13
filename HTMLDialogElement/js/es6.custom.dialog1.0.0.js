@@ -68,15 +68,25 @@ class CustomDialog {
   }
 
   closeDialog() {
+    // 先獲取之前保存的滾動位置
+    const scrollY = this.previousScrollY;
+    
     // 取消對話框顯示
     this.dialog.close();
     this.dialogContent.style.display = 'none';
 
-    // 恢復背景滾動
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, this.previousScrollY);
+    // 恢復背景滾動，但使用 requestAnimationFrame 來確保平滑過渡
+    requestAnimationFrame(() => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      
+      // 立即設置滾動位置
+      window.scrollTo({
+        top: scrollY,
+        behavior: 'instant'  // 使用 instant 而不是 smooth 來避免動畫效果
+      });
+    });
   }
 
   initializeEvents(closeButtonSelectors) {
